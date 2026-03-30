@@ -102,14 +102,7 @@ async def _seed_persisted_automation_logs() -> None:
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
-    # Vite picks another port when 3000 is in use (e.g. 3001–3002); without this the browser shows "failed to fetch".
-    allow_origin_regex=r"^http://(localhost|127\.0\.0\.1):\d+$",
+    allow_origins=["*"],  # Allow all origins for production deployment
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
