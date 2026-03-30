@@ -3,13 +3,13 @@ Analytics service for dashboard insights.
 Provides cost allocation, forecasting, and financial analytics.
 """
 import logging
-import os
+from config import UNIT_COUNT, UNIT_TYPE
 from datetime import datetime, timedelta
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from models import CostData
+from db.models import CostData
 
 logger = logging.getLogger(__name__)
 
@@ -143,8 +143,8 @@ def get_unit_economics(db: Session) -> dict:
     result = db.execute(select(func.sum(CostData.amount))).scalar()
     total_cost = float(result or 0)
 
-    unit_count = int(os.getenv("UNIT_COUNT", "1000"))
-    unit_type = os.getenv("UNIT_TYPE", "API requests")
+    unit_count = UNIT_COUNT
+    unit_type = UNIT_TYPE
 
     cost_per_unit = total_cost / unit_count if unit_count > 0 else 0
 

@@ -1,5 +1,7 @@
+"""
+EC2 optimization and automation action service.
+"""
 import logging
-import os
 from datetime import datetime, timezone
 from typing import Any, Literal
 
@@ -7,34 +9,33 @@ import boto3
 from botocore.exceptions import BotoCoreError, ClientError
 from sqlalchemy import desc, select
 
-import settings_env  # noqa: F401 — repo-root .env
-from database import SessionLocal
-from models import AutomationActionLog
+from config import (
+    AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY,
+    AWS_DEFAULT_REGION,
+    EC2_INSTANCE_ID,
+    EC2_OPTIMIZATION_INSTANCE_NAMES,
+    EC2_OPTIMIZATION_NAME_TAG,
+    EC2_OPTIMIZATION_ACTION,
+    EC2_OPTIMIZATION_AUTO,
+    EC2_OPTIMIZATION_BACKGROUND,
+    EC2_OPTIMIZATION_SEARCH_REGIONS,
+    AUTOMATION_LOG_READ_LIMIT,
+)
+from db.database import SessionLocal
+from db.models import AutomationActionLog
 
 logger = logging.getLogger(__name__)
 
-_AUTOMATION_LOG_READ_LIMIT = int(os.getenv("AUTOMATION_LOG_READ_LIMIT", "500"))
-
-# EC2 automation (optional env):
-#   EC2_INSTANCE_ID — explicit id(s), comma-separated
-#   EC2_OPTIMIZATION_INSTANCE_NAMES — Name tag value(s), comma-separated e.g. "test"
-#   EC2_OPTIMIZATION_NAME_TAG — alias for a single name
-#   EC2_OPTIMIZATION_ACTION — "stop" (default) or "terminate"
-#   EC2_OPTIMIZATION_AUTO — true: run name-tag policy on each POST /costs/fetch (AWS mode)
-#   EC2_OPTIMIZATION_BACKGROUND — true: periodic policy worker (see interval below)
-#   EC2_OPTIMIZATION_POLICY_INTERVAL_SECONDS — background tick interval (default 30, min 2)
-#   EC2_OPTIMIZATION_SEARCH_REGIONS — optional comma-separated extra regions for Name-tag lookup
-#       (default list includes ap-south-1, ap-south-2, etc. if this is unset)
-
 
 def log_action(action: str, service: str, status: str, message: str) -> None:
+    """Log automation action to database and optionally send email."""
     db = SessionLocal()
     try:
         db.add(AutomationActionLog(action=action, service=service, status=status, message=message))
         db.commit()
         try:
-            from optimization_email import schedule_optimization_email
-
+            from services.optimization_email import schedule_optimization_email
             schedule_optimization_email(action, service, status, message)
         except Exception:
             logger.warning("Optimization email scheduling failed", exc_info=True)
@@ -46,7 +47,8 @@ def log_action(action: str, service: str, status: str, message: str) -> None:
 
 
 def get_action_logs(*, limit: int | None = None) -> list[dict[str, str]]:
-    cap = limit if limit is not None else _AUTOMATION_LOG_READ_LIMIT
+    """Retrieve automation action logs from database."""
+    cap = limit if limit is not None else AUTOMATION_LOG_READ_LIMIT
     db = SessionLocal()
     try:
         rows = db.execute(
@@ -108,22 +110,24 @@ def seed_archived_action_logs_once() -> None:
 
 
 def _ec2_client_for_region(region_name: str):
+    """Create EC2 client for specific region."""
     return boto3.client(
         "ec2",
-        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         region_name=region_name,
     )
 
 
 def _ec2_client():
-    return _ec2_client_for_region(os.getenv("AWS_DEFAULT_REGION", "us-east-1"))
+    """Create EC2 client for default region."""
+    return _ec2_client_for_region(AWS_DEFAULT_REGION)
 
 
 def _lookup_region_list() -> list[str]:
     """Regions used when resolving instances by Name tag (and retries)."""
-    primary = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
-    extra = os.getenv("EC2_OPTIMIZATION_SEARCH_REGIONS", "").strip()
+    primary = AWS_DEFAULT_REGION
+    extra = EC2_OPTIMIZATION_SEARCH_REGIONS.strip() if EC2_OPTIMIZATION_SEARCH_REGIONS else ""
     if extra:
         regions = [primary]
         for part in extra.split(","):
@@ -161,16 +165,18 @@ def discover_instances_by_name(names: list[str]) -> list[tuple[str, str]]:
 
 
 def _optimization_action_from_env() -> Literal["stop", "terminate"]:
-    v = (os.getenv("EC2_OPTIMIZATION_ACTION") or "stop").strip().lower()
-    return "terminate" if v == "terminate" else "stop"
+    """Get EC2 optimization action from config."""
+    return "terminate" if EC2_OPTIMIZATION_ACTION == "terminate" else "stop"
 
 
 def _names_from_env() -> list[str]:
-    raw = os.getenv("EC2_OPTIMIZATION_INSTANCE_NAMES") or os.getenv("EC2_OPTIMIZATION_NAME_TAG") or ""
+    """Get EC2 instance names from config."""
+    raw = EC2_OPTIMIZATION_INSTANCE_NAMES or EC2_OPTIMIZATION_NAME_TAG or ""
     return [n.strip() for n in raw.split(",") if n.strip()]
 
 
 def _instance_ids_by_name_tags(ec2, names: list[str]) -> list[str]:
+    """Find EC2 instance IDs by Name tag."""
     if not names:
         return []
     found: list[str] = []
@@ -197,14 +203,14 @@ def resolve_ec2_target_instance_ids(
     instance_names: list[str] | None = None,
 ) -> list[tuple[str, str]]:
     """
+    Resolve EC2 instance targets from config.
     instance_names=None uses env; empty list means do not resolve by name.
     Returns (instance_id, region) so stop/terminate call the correct regional endpoint.
     """
     pairs: list[tuple[str, str]] = []
-    default_region = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
-    if include_explicit_ids:
-        raw = os.getenv("EC2_INSTANCE_ID") or ""
-        for part in raw.split(","):
+    default_region = AWS_DEFAULT_REGION
+    if include_explicit_ids and EC2_INSTANCE_ID:
+        for part in EC2_INSTANCE_ID.split(","):
             s = part.strip()
             if s:
                 pairs.append((s, default_region))
@@ -304,7 +310,7 @@ def _try_explicit_id_other_regions(
     action_key: str,
 ) -> str | None:
     """If EC2_INSTANCE_ID points at the wrong default region, try other lookup regions."""
-    default_region = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
+    default_region = AWS_DEFAULT_REGION
     for region in _lookup_region_list():
         if region == default_region:
             continue
@@ -333,8 +339,8 @@ def _try_explicit_id_other_regions(
 
 
 def run_proactive_ec2_optimization_if_enabled() -> dict[str, list[str]]:
-    auto = os.getenv("EC2_OPTIMIZATION_AUTO", "").strip().lower()
-    if auto not in ("1", "true", "yes"):
+    """Run EC2 optimization if auto mode is enabled."""
+    if not EC2_OPTIMIZATION_AUTO:
         return {"actions_taken": []}
     if not _names_from_env():
         log_action(
@@ -350,8 +356,7 @@ def run_proactive_ec2_optimization_if_enabled() -> dict[str, list[str]]:
 
 def run_ec2_background_policy_tick() -> dict[str, list[str]]:
     """Called on a timer when EC2_OPTIMIZATION_BACKGROUND is true. Uses name-tag targets only."""
-    bg = os.getenv("EC2_OPTIMIZATION_BACKGROUND", "").strip().lower()
-    if bg not in ("1", "true", "yes"):
+    if not EC2_OPTIMIZATION_BACKGROUND:
         return {"actions_taken": []}
     if not _names_from_env():
         return {"actions_taken": []}
@@ -364,6 +369,7 @@ def run_ec2_background_policy_tick() -> dict[str, list[str]]:
 
 
 def handle_anomalies(anomalies: list[dict[str, Any]]) -> dict[str, list[str]]:
+    """Handle detected anomalies and trigger appropriate actions."""
     actions_taken: list[str] = []
 
     for anomaly in anomalies:
@@ -393,11 +399,13 @@ def handle_anomalies(anomalies: list[dict[str, Any]]) -> dict[str, list[str]]:
 
 
 def handle_ec2_anomaly() -> list[str] | None:
+    """Handle EC2 anomaly by running optimization."""
     taken = run_ec2_optimization("cost_anomaly_high_severity", include_explicit_ids=True)
     return taken if taken else None
 
 
 def handle_lambda_anomaly() -> str:
+    """Handle Lambda anomaly (observation only)."""
     message = "Lambda anomaly detected (no action taken)"
     logger.info(message)
     log_action("observe_lambda", "LAMBDA", "logged", message)

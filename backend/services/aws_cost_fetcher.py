@@ -1,10 +1,12 @@
-import os
+"""
+AWS Cost Explorer integration service.
+"""
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import boto3
 
-import settings_env  # noqa: F401 — repo-root .env
+from config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION
 
 TIME_FRAME_TO_DAYS = {
     "today": 1,
@@ -15,21 +17,20 @@ TIME_FRAME_TO_DAYS = {
 
 
 def _aws_client():
-    aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
-    aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
-
-    if not all([aws_access_key_id, aws_secret_access_key]):
+    """Create AWS Cost Explorer client."""
+    if not all([AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY]):
         raise ValueError("AWS environment variables are missing. Check your .env file.")
 
     return boto3.client(
         "ce",
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-        region_name=os.getenv("AWS_DEFAULT_REGION", "us-east-1"),
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_DEFAULT_REGION,
     )
 
 
 def resolve_time_window(time_frame: str) -> tuple[str, str]:
+    """Convert time frame string to start and end dates."""
     if time_frame not in TIME_FRAME_TO_DAYS:
         raise ValueError(f"Unsupported time frame: {time_frame}")
 
@@ -47,6 +48,7 @@ def fetch_cost_data(
     time_frame: str = "past_one_month",
     services: list[str] | None = None,
 ) -> dict[str, Any]:
+    """Fetch cost data from AWS Cost Explorer."""
     start_date, end_date = resolve_time_window(time_frame)
     client = _aws_client()
 

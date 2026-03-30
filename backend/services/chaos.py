@@ -15,10 +15,18 @@ import boto3
 from botocore.exceptions import BotoCoreError, ClientError
 from sqlalchemy import desc, select, update
 
-import settings_env  # noqa: F401 — repo-root .env
-from actions import log_action
-from database import SessionLocal
-from models import ChaosModeRun
+from config import (
+    AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY,
+    AWS_DEFAULT_REGION,
+    ENABLE_CHAOS_MODE,
+    MAX_CHAOS_INSTANCES,
+    CHAOS_ANOMALY_DELAY_SECONDS,
+    CHAOS_OPTIMIZE_DELAY_SECONDS,
+)
+from services.actions import log_action
+from db.database import SessionLocal
+from db.models import ChaosModeRun
 
 logger = logging.getLogger(__name__)
 
@@ -31,18 +39,19 @@ NAME_TAG = "chaos-test"
 
 
 def _env_bool(key: str, default: str = "false") -> bool:
+    """Check if environment variable is truthy."""
+    import os
     return os.getenv(key, default).strip().lower() in ("1", "true", "yes")
 
 
 def is_chaos_mode_enabled() -> bool:
-    return _env_bool("ENABLE_CHAOS_MODE", "false")
+    """Check if chaos mode is enabled."""
+    return ENABLE_CHAOS_MODE
 
 
 def max_chaos_instances() -> int:
-    try:
-        return max(1, min(3, int(os.getenv("MAX_CHAOS_INSTANCES", "1"))))
-    except ValueError:
-        return 1
+    """Get maximum chaos instances from config."""
+    return MAX_CHAOS_INSTANCES
 
 
 def _friendly_boto_error(exc: Exception) -> str:
@@ -61,19 +70,21 @@ def _friendly_boto_error(exc: Exception) -> str:
 
 
 def _ec2_client(region: str):
+    """Create EC2 client for region."""
     return boto3.client(
         "ec2",
-        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         region_name=region,
     )
 
 
 def _ssm_client(region: str):
+    """Create SSM client for region."""
     return boto3.client(
         "ssm",
-        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         region_name=region,
     )
 
@@ -240,9 +251,10 @@ async def _sleep_or_cancel(seconds: float, cancel: asyncio.Event) -> bool:
 
 
 async def _chaos_workflow() -> None:
+    """Execute chaos mode workflow."""
     global _chaos_task, _chaos_cancel
     cancel = _chaos_cancel or asyncio.Event()
-    region = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
+    region = AWS_DEFAULT_REGION
     run_id: int | None = None
     instance_id: str | None = None
 
@@ -268,7 +280,7 @@ async def _chaos_workflow() -> None:
             f"Created EC2 instance {iid} ({INSTANCE_TYPE}, {region}, tag Name={NAME_TAG}).",
         )
 
-        delay1 = float(os.getenv("CHAOS_ANOMALY_DELAY_SECONDS", "20"))
+        delay1 = CHAOS_ANOMALY_DELAY_SECONDS
         if await _sleep_or_cancel(delay1, cancel):
             await asyncio.to_thread(_terminate_instance_sync, iid, region)
             _update_run_status(run_id, iid, "cancelled")
@@ -290,7 +302,7 @@ async def _chaos_workflow() -> None:
             "Optimization triggered: terminating instance (chaos cleanup).",
         )
 
-        delay2 = float(os.getenv("CHAOS_OPTIMIZE_DELAY_SECONDS", "5"))
+        delay2 = CHAOS_OPTIMIZE_DELAY_SECONDS
         if await _sleep_or_cancel(delay2, cancel):
             await asyncio.to_thread(_terminate_instance_sync, iid, region)
             _update_run_status(run_id, iid, "cancelled")

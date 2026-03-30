@@ -1,9 +1,13 @@
+"""
+Database models for CloudSense.
+"""
 from sqlalchemy import Boolean, Column, Date, DateTime, Float, Integer, String, Text, func
 
-from database import Base, engine
+from db.database import Base, engine
 
 
 class CostData(Base):
+    """Cost data records with anomaly detection results."""
     __tablename__ = "cost_data"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -16,7 +20,6 @@ class CostData(Base):
 
 class AutomationActionLog(Base):
     """Durable automation / optimization action history for the monitor UI."""
-
     __tablename__ = "automation_action_logs"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -29,7 +32,6 @@ class AutomationActionLog(Base):
 
 class ChaosModeRun(Base):
     """Tracks chaos demo EC2 instances for cleanup and auditing."""
-
     __tablename__ = "chaos_mode_runs"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -40,4 +42,5 @@ class ChaosModeRun(Base):
     updated_at = Column(DateTime(timezone=True), nullable=True)
 
 
+# Create all tables
 Base.metadata.create_all(bind=engine)

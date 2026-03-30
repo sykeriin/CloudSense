@@ -1,27 +1,17 @@
+"""
+ML-based anomaly detection service.
+"""
 import logging
-import os
 from datetime import date
 
 import httpx
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-import settings_env  # noqa: F401 — repo-root .env
-from models import CostData
+from config import get_ml_detect_url
+from db.models import CostData
 
 logger = logging.getLogger(__name__)
-
-# Ngrok tunnel to local ML (Anastasia ml_service). Override with ML_DETECT_URL or ML_ANOMALY_DETECT_URL in .env
-_DEFAULT_ML_DETECT = "https://thixotropic-chanel-infinitesimally.ngrok-free.dev/detect"
-
-
-def _ml_detect_url() -> str:
-    return (
-        os.getenv("ML_DETECT_URL")
-        or os.getenv("ML_ANOMALY_DETECT_URL")
-        or _DEFAULT_ML_DETECT
-    )
-
 
 # Headers so ngrok free tier does not block programmatic POSTs
 _NGROK_HEADERS = {"ngrok-skip-browser-warning": "true"}
@@ -32,7 +22,7 @@ async def run_anomaly_detection(db: Session) -> None:
     POST all cost_data to the ML service, then update anomaly_score / is_anomaly by date.
     Accepts ML responses with either (anomaly_score, is_anomaly) or (score, anomaly).
     """
-    ml_url = _ml_detect_url()
+    ml_url = get_ml_detect_url()
     rows = list(db.execute(select(CostData)).scalars().all())
     if not rows:
         return

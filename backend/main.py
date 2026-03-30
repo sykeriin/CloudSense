@@ -1,4 +1,4 @@
-import settings_env  # noqa: F401 — load repo-root .env before other backend imports
+import config  # Load environment variables first
 
 import asyncio
 import json
@@ -12,11 +12,12 @@ import httpx
 from botocore.exceptions import ClientError
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from actions import (
+from services.actions import (
     get_action_logs,
     handle_anomalies,
     run_ec2_background_policy_tick,
@@ -24,8 +25,8 @@ from actions import (
     run_proactive_ec2_optimization_if_enabled,
     seed_archived_action_logs_once,
 )
-from anomaly_detection import run_anomaly_detection
-from analytics_service import (
+from services.anomaly_detection import run_anomaly_detection
+from services.analytics_service import (
     get_anomaly_insights,
     get_cost_allocation,
     get_dashboard_summary,
@@ -33,16 +34,13 @@ from analytics_service import (
     get_shared_costs,
     get_unit_economics,
 )
-from aws_cost_fetcher import fetch_cost_data, resolve_time_window
-from database import get_db
-from models import CostData
+from services.aws_cost_fetcher import fetch_cost_data, resolve_time_window
+from db.database import get_db
+from db.models import CostData
 
 SYNTHETIC_COSTS_PATH = Path(__file__).resolve().parent.parent / "synthetic_costs.json"
-DEFAULT_ML_DETECT_URL = "https://thixotropic-chanel-infinitesimally.ngrok-free.dev/detect"
-DEFAULT_ML_FORECAST_URL = "http://127.0.0.1:8001/forecast"
 NGROK_HEADERS = {"ngrok-skip-browser-warning": "true"}
 MIN_USABLE_FORECAST_TOTAL = 0.01
-DEFAULT_GROQ_MODEL = "llama-3.3-70b-versatile"
 
 logger = logging.getLogger(__name__)
 
@@ -88,12 +86,7 @@ async def _ec2_background_policy_loop() -> None:
             run_ec2_background_policy_tick()
         except Exception:
             logger.exception("EC2 background policy tick failed")
-        try:
-            raw = os.getenv("EC2_OPTIMIZATION_POLICY_INTERVAL_SECONDS", "30")
-            interval = float(raw)
-        except ValueError:
-            interval = 30.0
-        interval = max(2.0, min(interval, 3600.0))
+        interval = max(2.0, min(config.EC2_OPTIMIZATION_POLICY_INTERVAL_SECONDS, 3600.0))
         await asyncio.sleep(interval)
 
 
@@ -121,6 +114,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    """Catch all unhandled exceptions and return proper error responses with CORS headers."""
+    logger.exception("Unhandled exception in request: %s", request.url)
+    
+    # If it's already an HTTPException, let FastAPI handle it normally
+    if isinstance(exc, HTTPException):
+        raise exc
+    
+    # For other exceptions, return a 500 with details
+    return JSONResponse(
+        status_code=500,
+        content={"detail": f"Internal server error: {str(exc)}"},
+    )
 
 
 class FinOpsAssistantRequest(BaseModel):
@@ -153,12 +162,12 @@ def health_check():
 @app.get("/debug/env")
 def debug_env():
     """Small safety endpoint to verify the server loaded .env in this process."""
-    key_id = os.getenv("AWS_ACCESS_KEY_ID") or ""
+    key_id = config.AWS_ACCESS_KEY_ID or ""
     return {
         "aws_access_key_id_present": bool(key_id),
         "aws_access_key_id_last4": key_id[-4:] if len(key_id) >= 4 else "",
-        "aws_default_region": os.getenv("AWS_DEFAULT_REGION"),
-        "enable_chaos_mode": os.getenv("ENABLE_CHAOS_MODE"),
+        "aws_default_region": config.AWS_DEFAULT_REGION,
+        "enable_chaos_mode": config.ENABLE_CHAOS_MODE,
     }
 
 
@@ -178,7 +187,7 @@ def optimization_ec2_run(body: Ec2OptimizationRunRequest = Ec2OptimizationRunReq
 @app.post("/chaos/start")
 async def chaos_start():
     """Controlled demo: one t3.micro with tag chaos-test, then terminate. Requires ENABLE_CHAOS_MODE=true."""
-    from chaos import is_chaos_mode_enabled, start_chaos_mode
+    from services.chaos import is_chaos_mode_enabled, start_chaos_mode
 
     if not is_chaos_mode_enabled():
         raise HTTPException(
@@ -191,14 +200,14 @@ async def chaos_start():
 @app.post("/chaos/stop")
 async def chaos_stop():
     """Cancel in-flight chaos workflow and terminate tracked instances."""
-    from chaos import stop_chaos_mode
+    from services.chaos import stop_chaos_mode
 
     return await stop_chaos_mode()
 
 
 @app.on_event("startup")
 async def _chaos_stale_cleanup_on_startup() -> None:
-    from chaos import cleanup_stale_chaos_runs
+    from services.chaos import cleanup_stale_chaos_runs
 
     await asyncio.to_thread(cleanup_stale_chaos_runs)
 
@@ -261,19 +270,19 @@ def load_synthetic_records() -> list[dict]:
 
 
 def ml_detect_url() -> str:
-    return os.getenv("ML_DETECT_URL") or os.getenv("ML_ANOMALY_DETECT_URL") or DEFAULT_ML_DETECT_URL
+    return config.get_ml_detect_url()
 
 
 def ml_forecast_url() -> str:
-    return os.getenv("ML_FORECAST_URL") or DEFAULT_ML_FORECAST_URL
+    return config.get_ml_forecast_url()
 
 
 def groq_api_key() -> str:
-    return os.getenv("GROQ_API_KEY", "").strip()
+    return config.get_groq_api_key()
 
 
 def groq_model() -> str:
-    return (os.getenv("GROQ_MODEL") or DEFAULT_GROQ_MODEL).strip()
+    return config.get_groq_model()
 
 
 def has_usable_costs(records: list[dict]) -> bool:
@@ -1126,12 +1135,18 @@ def monitor_services(
     strict_aws: bool = Query(default=False),
     db: Session = Depends(get_db),
 ):
-    cost_data, data_source = get_cost_data_with_fallback(
-        time_frame=time_frame,
-        services=[],
-        force_fallback=force_fallback,
-        strict_aws=strict_aws,
-    )
+    try:
+        cost_data, data_source = get_cost_data_with_fallback(
+            time_frame=time_frame,
+            services=[],
+            force_fallback=force_fallback,
+            strict_aws=strict_aws,
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception("Monitor services cost fetch failed")
+        raise _http_exception_from_aws_error(e, headline="Unable to load monitor services data") from e
 
     service_stats: dict[str, dict[str, float | int | str]] = {}
     for record in cost_data["records"]:

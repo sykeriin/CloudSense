@@ -29,7 +29,12 @@ Core capabilities:
 ```text
 frontend/        React dashboard and UI workflows
 backend/         FastAPI APIs, AWS integration, persistence, automation logic
-ml_service.py    Anomaly detection and forecasting service
+  ├── db/        Database models and connection
+  ├── services/  Business logic services
+  ├── config.py  Configuration management
+  └── main.py    FastAPI application
+ml_service/      Anomaly detection and forecasting service
+scripts/         Utility scripts
 ```
 
 Application flow:
@@ -43,17 +48,37 @@ Application flow:
 
 ```text
 .
-|-- backend/
-|-- frontend/
-|-- landing page/
-|-- ml_service.py
-|-- synthetic_costs.json
-|-- generate_synthetic_costs.py
-|-- requirements.txt
-|-- .env.example
+├── backend/
+│   ├── db/
+│   │   ├── database.py
+│   │   └── models.py
+│   ├── services/
+│   │   ├── actions.py
+│   │   ├── analytics_service.py
+│   │   ├── anomaly_detection.py
+│   │   ├── aws_cost_fetcher.py
+│   │   ├── chaos.py
+│   │   └── optimization_email.py
+│   ├── config.py
+│   ├── main.py
+│   ├── settings_env.py
+│   └── requirements.txt
+├── frontend/
+│   └── src/
+│       ├── components/
+│       ├── customdash/
+│       ├── landing/
+│       └── App.tsx
+├── ml_service/
+│   ├── ml_service.py
+│   └── requirements.txt
+├── scripts/
+│   ├── generate_synthetic_costs.py
+│   └── test_ce.py
+├── .env.example
+├── synthetic_costs.json
+└── README.md
 ```
-
-The main application lives in `backend/`, `frontend/`, and `ml_service.py`. The `landing page/` directory contains a separate landing-page app variant.
 
 ## Features
 
@@ -116,10 +141,15 @@ The main application lives in `backend/`, `frontend/`, and `ml_service.py`. The 
 ### 1. Install Python dependencies
 
 ```bash
+# Backend dependencies
+cd backend
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
-pip install pandas scikit-learn prophet
+
+# ML service dependencies
+cd ../ml_service
+pip install -r requirements.txt
 ```
 
 ### 2. Create the environment file
@@ -131,6 +161,7 @@ copy .env.example .env
 ### 3. Start the ML service
 
 ```bash
+cd ml_service
 uvicorn ml_service:app --host 127.0.0.1 --port 8001 --reload
 ```
 
@@ -202,8 +233,9 @@ Optional integrations and automation settings:
 
 - The backend can use live AWS data or fall back to `synthetic_costs.json`
 - The default ML forecast URL is `http://127.0.0.1:8001/forecast`
-- Database tables are created from `backend/models.py`
+- Database tables are created from `backend/db/models.py`
 - The frontend includes the main dashboard plus customizable dashboard components
+- Backend uses a modular structure with services and database layers
 
 ## Useful Commands
 
@@ -212,10 +244,11 @@ Optional integrations and automation settings:
 cd frontend
 npm run lint
 
-# Backend
+# Backend (run from backend directory)
 cd backend
 uvicorn main:app --reload
 
-# ML service
+# ML service (run from ml_service directory)
+cd ml_service
 uvicorn ml_service:app --reload --port 8001
 ```

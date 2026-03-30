@@ -26,44 +26,52 @@ from email.mime.text import MIMEText
 
 import httpx
 
-import settings_env  # noqa: F401
+from config import (
+    OPTIMIZATION_EMAIL_ENABLED,
+    SMTP_HOST,
+    SMTP_PORT,
+    SMTP_USER,
+    SMTP_PASSWORD,
+    EMAIL_FROM,
+    EMAIL_TO,
+    get_groq_api_key,
+    get_groq_model,
+    get_ml_forecast_url,
+)
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_GROQ_MODEL = "llama-3.3-70b-versatile"
-GROQ_CHAT_URL = "https://api.groq.com/openai/v1/chat/completions"
-
-
 def _env_bool(key: str) -> bool:
-    return os.getenv(key, "").strip().lower() in ("1", "true", "yes")
+    """Check if environment variable is truthy."""
+    return key in ("true", "1", "yes")
 
 
 def _smtp_configured() -> bool:
-    return all(
-        [
-            os.getenv("SMTP_HOST", "").strip(),
-            os.getenv("SMTP_USER", "").strip(),
-            os.getenv("SMTP_PASSWORD", "").strip(),
-            os.getenv("EMAIL_FROM", "").strip(),
-            os.getenv("EMAIL_TO", "").strip(),
-        ]
-    )
+    """Check if SMTP is configured."""
+    return all([SMTP_HOST, SMTP_USER, SMTP_PASSWORD, EMAIL_FROM, EMAIL_TO])
 
 
 def _groq_api_key() -> str:
-    return os.getenv("GROQ_API_KEY", "").strip()
+    """Get Groq API key."""
+    return get_groq_api_key()
 
 
 def _groq_model() -> str:
-    return (os.getenv("GROQ_MODEL") or DEFAULT_GROQ_MODEL).strip()
+    """Get Groq model name."""
+    return get_groq_model()
 
 
 def ml_forecast_url() -> str:
-    return (os.getenv("ML_FORECAST_URL") or "http://127.0.0.1:8001/forecast").strip()
+    """Get ML forecast URL."""
+    return get_ml_forecast_url()
+
+
+GROQ_CHAT_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 
 def should_notify_optimization_email(action: str, status: str) -> bool:
-    if not _env_bool("OPTIMIZATION_EMAIL_ENABLED"):
+    """Check if email notification should be sent."""
+    if not OPTIMIZATION_EMAIL_ENABLED:
         return False
     if not _smtp_configured():
         return False
@@ -79,7 +87,7 @@ def should_notify_optimization_email(action: str, status: str) -> bool:
 def _build_prophet_summary() -> str:
     """Call Prophet service with recent cost rows; factual context for Groq or fallback body."""
     try:
-        from aws_cost_fetcher import fetch_cost_data
+        from services.aws_cost_fetcher import fetch_cost_data
     except Exception as e:
         return f"Prophet context skipped (import): {e}"
 
@@ -216,24 +224,19 @@ def _compose_body_with_groq(action: str, service: str, status: str, message: str
 
 
 def _send_smtp(subject: str, body: str) -> None:
-    host = os.getenv("SMTP_HOST", "").strip()
-    port = int(os.getenv("SMTP_PORT", "587") or "587")
-    user = os.getenv("SMTP_USER", "").strip()
-    password = os.getenv("SMTP_PASSWORD", "").strip()
-    from_addr = os.getenv("EMAIL_FROM", "").strip()
-    to_raw = os.getenv("EMAIL_TO", "").strip()
-    recipients = [e.strip() for e in to_raw.split(",") if e.strip()]
+    """Send email via SMTP."""
+    recipients = [e.strip() for e in EMAIL_TO.split(",") if e.strip()]
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = from_addr
+    msg["From"] = EMAIL_FROM
     msg["To"] = ", ".join(recipients)
     msg.attach(MIMEText(body, "plain", "utf-8"))
 
-    with smtplib.SMTP(host, port, timeout=60) as smtp:
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=60) as smtp:
         smtp.starttls()
-        smtp.login(user, password)
-        smtp.sendmail(from_addr, recipients, msg.as_string())
+        smtp.login(SMTP_USER, SMTP_PASSWORD)
+        smtp.sendmail(EMAIL_FROM, recipients, msg.as_string())
 
 
 def _notify_worker(action: str, service: str, status: str, message: str) -> None:
