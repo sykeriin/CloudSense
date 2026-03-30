@@ -1,58 +1,74 @@
 # CloudSense
 
-CloudSense is a cloud cost intelligence project for monitoring AWS spend, detecting anomalies, forecasting costs, and surfacing FinOps recommendations through a React dashboard backed by FastAPI services.
+CloudSense is a FinOps-focused cloud cost intelligence platform for tracking AWS spend, detecting anomalies, forecasting future cost trends, and surfacing optimization opportunities through an interactive dashboard.
 
-## What It Does
+## Overview
 
-- Pulls AWS Cost Explorer data with service-level breakdowns
-- Falls back to a synthetic dataset when live AWS data is unavailable
-- Detects anomalies with an Isolation Forest-based ML service
-- Forecasts future spend with Prophet
-- Exposes dashboard APIs for cost allocation, shared costs, unit economics, forecast, insights, and monitoring
-- Includes EC2 automation hooks for stop/terminate workflows and a controlled chaos-mode demo path
-- Provides an in-app FinOps assistant with Groq or a local fallback summary mode
+CloudSense combines a React frontend, a FastAPI backend, and a lightweight ML service to help teams understand where cloud spend is going and respond faster when costs drift unexpectedly.
 
-## Repo Structure
+Core capabilities:
 
-```text
-.
-|-- backend/                         FastAPI backend and AWS/automation logic
-|-- frontend/                        Main Vite + React dashboard
-|-- ml_service.py                    ML service for anomaly detection and forecasting
-|-- synthetic_costs.json             Demo/fallback cost dataset
-|-- requirements.txt                 Python dependencies for backend/ml service
-|-- docs.md                          Hackathon documentation notes
-|-- hackathon_report.md              Project report and asset/library list
-|-- everything-with-customisable-dash/
-|-- landing page/
-```
+- AWS Cost Explorer ingestion with service-level breakdowns
+- Cost anomaly detection using Isolation Forest
+- Forecasting with Prophet-based time series predictions
+- Dashboard views for summary, allocation, shared costs, unit economics, and insights
+- What-if simulation endpoints for optimization scenarios
+- EC2 optimization workflows and action logging
+- FinOps assistant responses powered by Groq or a local fallback summary
+- Synthetic fallback dataset support for demos and local development
 
-`everything-with-customisable-dash/` and `landing page/` look like related prototype or alternate app folders. The root `backend/`, `frontend/`, and `ml_service.py` form the main working app.
+## Tech Stack
+
+- Frontend: React 19, TypeScript, Vite, Recharts, Lucide React, Tailwind tooling, Motion
+- Backend: FastAPI, SQLAlchemy, PostgreSQL, boto3, httpx, python-dotenv
+- ML Service: FastAPI, pandas, scikit-learn, Prophet
+- Cloud/Data: AWS Cost Explorer, AWS EC2
 
 ## Architecture
 
-### Frontend
+```text
+frontend/        React dashboard and UI workflows
+backend/         FastAPI APIs, AWS integration, persistence, automation logic
+ml_service.py    Anomaly detection and forecasting service
+```
 
-- Vite + React 19 + TypeScript
-- Recharts, Lucide, Tailwind tooling, motion
-- Runs on port `3000` by default
+Application flow:
+
+1. The frontend calls the FastAPI backend for metrics, anomalies, analytics, and monitor data.
+2. The backend fetches AWS cost data or falls back to `synthetic_costs.json`.
+3. The backend calls the ML service for anomaly detection and forecasting.
+4. Results are returned to the UI and can trigger optimization or monitoring workflows.
+
+## Repository Structure
+
+```text
+.
+|-- backend/
+|-- frontend/
+|-- landing page/
+|-- ml_service.py
+|-- synthetic_costs.json
+|-- generate_synthetic_costs.py
+|-- requirements.txt
+|-- .env.example
+```
+
+The main application lives in `backend/`, `frontend/`, and `ml_service.py`. The `landing page/` directory contains a separate landing-page app variant.
+
+## Features
+
+- Cost monitoring across selectable time windows
+- Service-level cost breakdowns
+- Forecast visualizations for projected spend
+- Anomaly detection and alert surfacing
+- Dashboard widgets for allocation, unit cost, and shared-cost analysis
+- Optimization action logs for monitoring automated decisions
+- FinOps assistant endpoint for cloud spend Q&A
+- Chaos/demo support for controlled EC2 workflow testing
+
+## API Highlights
 
 ### Backend
-
-- FastAPI + SQLAlchemy + PostgreSQL
-- AWS Cost Explorer integration via `boto3`
-- HTTP integration with the ML service
-- FinOps assistant, dashboard APIs, optimization logs, and chaos-mode endpoints
-
-### ML Service
-
-- FastAPI
-- Isolation Forest for anomaly detection
-- Prophet for forecasting
-
-## Key Endpoints
-
-### Backend (`backend/main.py`)
 
 - `GET /health`
 - `GET /metrics`
@@ -74,24 +90,64 @@ CloudSense is a cloud cost intelligence project for monitoring AWS spend, detect
 - `POST /chaos/start`
 - `POST /chaos/stop`
 
-### ML Service (`ml_service.py`)
+### ML Service
 
 - `GET /health`
 - `POST /detect`
 - `POST /forecast`
 
-## Prerequisites
+## Getting Started
+
+### Prerequisites
 
 - Node.js 20+
-- Python 3.11+ recommended
+- Python 3.11+
 - PostgreSQL
-- AWS credentials with Cost Explorer access if you want live data
+- AWS credentials with Cost Explorer access for live cloud data
 
-## Environment Variables
+### 1. Install Python dependencies
 
-Copy `.env.example` to `.env` and fill in the values you need.
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+pip install pandas scikit-learn prophet
+```
 
-### Required for backend startup
+### 2. Create the environment file
+
+```bash
+copy .env.example .env
+```
+
+### 3. Start the ML service
+
+```bash
+uvicorn ml_service:app --host 127.0.0.1 --port 8001 --reload
+```
+
+### 4. Start the backend
+
+```bash
+cd backend
+uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+### 5. Start the frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000` after all services are running.
+
+## Environment Configuration
+
+Copy `.env.example` to `.env` and provide the values required for your setup.
+
+Required backend variables:
 
 - `DB_HOST`
 - `DB_PORT`
@@ -99,13 +155,13 @@ Copy `.env.example` to `.env` and fill in the values you need.
 - `DB_PASSWORD`
 - `DB_NAME`
 
-### Required for live AWS data
+Required for live AWS access:
 
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_DEFAULT_REGION`
 
-### Optional integrations
+Optional integrations and automation settings:
 
 - `ML_DETECT_URL`
 - `ML_ANOMALY_DETECT_URL`
@@ -134,52 +190,12 @@ Copy `.env.example` to `.env` and fill in the values you need.
 - `EMAIL_FROM`
 - `EMAIL_TO`
 
-## Local Setup
+## Development Notes
 
-### 1. Install backend and ML dependencies
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-pip install pandas scikit-learn prophet
-```
-
-### 2. Create environment file
-
-```bash
-copy .env.example .env
-```
-
-### 3. Start the ML service
-
-```bash
-uvicorn ml_service:app --host 127.0.0.1 --port 8001 --reload
-```
-
-### 4. Start the backend
-
-```bash
-cd backend
-uvicorn main:app --host 127.0.0.1 --port 8000 --reload
-```
-
-### 5. Start the frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Open `http://localhost:3000`.
-
-## Notes On Data Flow
-
-- The backend prefers live AWS data but can fall back to `synthetic_costs.json`
-- The ML anomaly detect URL defaults to a hosted ngrok endpoint unless overridden in `.env`
-- The ML forecast URL defaults to `http://127.0.0.1:8001/forecast`
-- Database tables are created on import from `backend/models.py`
+- The backend can use live AWS data or fall back to `synthetic_costs.json`
+- The default ML forecast URL is `http://127.0.0.1:8001/forecast`
+- Database tables are created from `backend/models.py`
+- The frontend includes the main dashboard plus customizable dashboard components
 
 ## Useful Commands
 
@@ -188,15 +204,10 @@ Open `http://localhost:3000`.
 cd frontend
 npm run lint
 
-# Backend dev server
+# Backend
 cd backend
 uvicorn main:app --reload
 
-# ML service dev server
+# ML service
 uvicorn ml_service:app --reload --port 8001
 ```
-
-## Existing Project Notes
-
-- [docs.md](C:\Users\Durva S\CloudSense\docs.md)
-- [hackathon_report.md](C:\Users\Durva S\CloudSense\hackathon_report.md)
