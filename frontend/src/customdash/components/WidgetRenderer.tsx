@@ -5,8 +5,7 @@ import { WidgetConfig, METRIC_OPTIONS } from '../types';
 import TextBlockWidget from './TextBlockWidget';
 import LogsWidget from './LogsWidget';
 import CurrentSituationAIWidget from './CurrentSituationAIWidget';
-
-const API_BASE_URL = 'http://127.0.0.1:8000';
+import { API_BASE_URL } from '../../config/api';
 const COLORS = ['#f87171', '#ffffff', '#a3a3a3', '#737373', '#525252', '#404040'];
 
 interface WidgetRendererProps {
