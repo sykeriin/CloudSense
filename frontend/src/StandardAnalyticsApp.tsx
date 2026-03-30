@@ -434,7 +434,7 @@ function Sidebar({
   ];
 
   return (
-    <aside className={cn('rounded-2xl border border-black/5 dark:border-white/5 p-4 flex flex-col shrink-0 shadow-sm transition-all duration-300', collapsed ? 'w-24' : 'w-64', theme === 'light' ? 'bg-[#fbfaf6]' : 'bg-[#121212]')}>
+    <aside className={cn('rounded-2xl border border-black/5 dark:border-white/5 p-4 flex flex-col shadow-sm transition-all duration-300 w-full lg:shrink-0', collapsed ? 'lg:w-24' : 'lg:w-64', theme === 'light' ? 'bg-[#fbfaf6]' : 'bg-[#121212]')}>
       <div className={cn('flex items-center px-2 py-1', collapsed ? 'justify-center' : 'justify-between gap-3')}>
         <div className={cn('flex items-center', collapsed ? 'justify-center' : 'gap-3')}>
           <div className={cn('w-9 h-9 border-2 flex items-center justify-center rounded-md shrink-0', theme === 'light' ? 'border-black' : 'border-white')}>
@@ -456,7 +456,7 @@ function Sidebar({
         </button>
       </div>
 
-      <div className="mt-8 space-y-2">
+      <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:mt-8 lg:grid-cols-1">
         {items.map((item) => {
           const Icon = item.icon;
           const active = view === item.id;
@@ -518,20 +518,20 @@ function TopBar({ theme, view, toggleTheme, onOpenProfile }: { theme: Theme; vie
   const copy = VIEW_COPY[view];
 
   return (
-    <header className="flex items-center justify-between shrink-0 gap-4">
-      <div>
+    <header className="flex flex-col gap-4 shrink-0 lg:flex-row lg:items-center lg:justify-between">
+      <div className="min-w-0">
         <div className="text-[12px] font-bold tracking-[0.35em] uppercase text-gray-500">
           {copy.eyebrow}
         </div>
-        <h1 className="text-[3.45rem] leading-none font-serif font-light">
+        <h1 className="text-[2.2rem] leading-none font-serif font-light sm:text-[2.8rem] xl:text-[3.45rem]">
           {copy.title}
         </h1>
         <div className="mt-2 text-[15px] font-semibold tracking-wide text-gray-500">{copy.blurb}</div>
       </div>
 
-      <div className="flex items-center gap-4 text-[12px] font-bold tracking-widest text-gray-500">
-        <div className="text-right">
-          <div className="text-[2.8rem] leading-none font-serif font-light opacity-40">{timeStamp.format(new Date())}</div>
+      <div className="flex flex-wrap items-center gap-3 text-[12px] font-bold tracking-widest text-gray-500 lg:justify-end">
+        <div className="min-w-0 lg:text-right">
+          <div className="text-[1.8rem] leading-none font-serif font-light opacity-40 sm:text-[2.3rem] xl:text-[2.8rem]">{timeStamp.format(new Date())}</div>
           <div className="text-[1rem] font-bold tracking-widest uppercase opacity-60">{dateStamp.format(new Date())}</div>
         </div>
         <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
@@ -710,13 +710,13 @@ function DashboardView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
   }, [totalPages]);
 
   return (
-    <div className="h-full min-h-0 grid grid-rows-[minmax(0,0.92fr)_minmax(0,1.08fr)] gap-3 overflow-visible">
+    <div className="h-full min-h-0 grid grid-cols-1 gap-3 overflow-visible lg:grid-rows-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
       {error && <div className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm flex items-center gap-2"><AlertCircle size={16} className="text-red-400" /><span>{error}</span></div>}
-      <div className="grid grid-cols-12 gap-3 min-h-0 overflow-visible">
-        <div className={cn('col-span-3 rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col justify-between overflow-hidden transition-transform duration-200 hover:scale-[1.015]', theme === 'light' ? 'bg-[#e5e5e5]' : 'bg-[#2a2422]')}>
+      <div className="grid grid-cols-1 gap-3 min-h-0 overflow-visible xl:grid-cols-12">
+        <div className={cn('rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col justify-between overflow-hidden transition-transform duration-200 hover:scale-[1.015] xl:col-span-3', theme === 'light' ? 'bg-[#e5e5e5]' : 'bg-[#2a2422]')}>
           <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400">TOTAL SPEND</h2>
           <div className="space-y-0.5">
-            <div className="text-7xl font-serif">{formatCurrency(totalSpend)}</div>
+            <div className="text-5xl font-serif sm:text-6xl xl:text-7xl">{formatCurrency(totalSpend)}</div>
             <div className="text-[14px] font-bold text-gray-500 tracking-widest">{dashboardForecast ? `${dashboardForecast.history_start_date} to ${dashboardForecast.history_end_date}` : 'Loading'}</div>
           </div>
           <div className="flex items-center gap-1.5 text-[14px] font-bold opacity-60 tracking-widest mt-4">
@@ -725,7 +725,7 @@ function DashboardView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
           </div>
         </div>
 
-        <div className="col-span-5 bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col relative overflow-visible transition-transform duration-200 hover:scale-[1.015]">
+        <div className="bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col relative overflow-visible transition-transform duration-200 hover:scale-[1.015] xl:col-span-5">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400 uppercase">Optimization Impact</h2>
             <DashboardFilterDropdown theme={theme} filters={optimizationFilters} onFilterChange={setOptimizationFilters} />
@@ -751,7 +751,7 @@ function DashboardView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
           </div>
         </div>
 
-        <div className="col-span-4 bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col min-h-0 transition-transform duration-200 hover:scale-[1.015]">
+        <div className="bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col min-h-0 transition-transform duration-200 hover:scale-[1.015] xl:col-span-4">
           <div className="flex items-center justify-between gap-3">
             <div>
               <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400 uppercase">Log Panel</h2>
@@ -789,9 +789,9 @@ function DashboardView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-3 min-h-0 overflow-visible">
-        <div className="col-span-6 bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col relative overflow-visible transition-transform duration-200 hover:scale-[1.015]">
-          <div className="flex justify-between items-center mb-4">
+      <div className="grid grid-cols-1 gap-3 min-h-0 overflow-visible xl:grid-cols-12">
+        <div className="bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col relative overflow-visible transition-transform duration-200 hover:scale-[1.015] xl:col-span-6">
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
               <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400">AWS COST MONITOR</h2>
               <button onClick={() => { setIsRefreshing(true); void loadDashboardData().finally(() => setIsRefreshing(false)); }} className="p-1 text-gray-500 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors">
@@ -807,7 +807,7 @@ function DashboardView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
               <DashboardFilterDropdown theme={theme} filters={monitorFilters} onFilterChange={setMonitorFilters} align="up" />
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-4 flex-grow items-center">
+          <div className="grid grid-cols-1 gap-4 flex-grow items-center sm:grid-cols-2 xl:grid-cols-3">
             {currentServices.map((service) => (
               <div key={service.id} className="space-y-2">
                 <span className="text-[13px] font-bold text-gray-600 tracking-widest uppercase">{service.name}</span>
@@ -821,8 +821,8 @@ function DashboardView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
           </div>
         </div>
 
-        <div className="col-span-6 bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col relative overflow-visible transition-transform duration-200 hover:scale-[1.015]">
-          <div className="flex justify-between items-center mb-2">
+        <div className="bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col relative overflow-visible transition-transform duration-200 hover:scale-[1.015] xl:col-span-6">
+          <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400 uppercase">Cost Report</h2>
             <DashboardFilterDropdown theme={theme} filters={reportFilters} onFilterChange={setReportFilters} align="up" />
           </div>
@@ -1174,8 +1174,8 @@ function SimulatorView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
     <div className="flex-1 min-h-0 flex flex-col gap-3">
       {error && <div className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm flex items-center gap-2"><AlertCircle size={16} className="text-red-400" /><span>{error}</span></div>}
 
-      <div className="grid grid-cols-12 gap-3 flex-[1.1] min-h-0">
-        <div className="col-span-4 bg-[var(--color-card-bg)] rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.015]">
+      <div className="grid grid-cols-1 gap-3 flex-[1.1] min-h-0 xl:grid-cols-12">
+        <div className="bg-[var(--color-card-bg)] rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.015] xl:col-span-4">
           <div>
             <h2 className="text-[11px] font-bold tracking-[0.2em] text-gray-400 uppercase">What-If Simulator</h2>
             <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
@@ -1262,7 +1262,7 @@ function SimulatorView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
           </button>
         </div>
 
-        <div className="col-span-8 grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:col-span-8 xl:grid-cols-3">
           <div className={cn('rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col justify-between transition-transform duration-200 hover:scale-[1.015]', theme === 'light' ? 'bg-[#e5e5e5]' : 'bg-[#2a2422]')}>
             <div className="text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">Projected Monthly Cost</div>
             <div className="text-4xl font-serif">{money.format(simulation?.projected_monthly_cost || 0)}</div>
@@ -1285,9 +1285,9 @@ function SimulatorView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-3 flex-1 min-h-0">
-        <div className="col-span-8 bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col transition-transform duration-200 hover:scale-[1.015]">
-          <div className="flex justify-between items-center mb-2">
+      <div className="grid grid-cols-1 gap-3 flex-1 min-h-0 xl:grid-cols-12">
+        <div className="bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col transition-transform duration-200 hover:scale-[1.015] xl:col-span-8">
+          <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-[11px] font-bold tracking-[0.2em] text-gray-400 uppercase">Historical Trend Used In Simulation</h2>
             <div className="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
               {simulation ? `${simulation.history_start_date} to ${simulation.history_end_date}` : ''}
@@ -1306,7 +1306,7 @@ function SimulatorView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
           </div>
         </div>
 
-        <div className="col-span-4 bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.015]">
+        <div className="bg-[var(--color-card-bg)] rounded-xl p-4 border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.015] xl:col-span-4">
           <div>
             <h2 className="text-[11px] font-bold tracking-[0.2em] text-gray-400 uppercase">Scenario Summary</h2>
             <div className="mt-3 text-lg font-serif">{simulation?.service || 'Loading'}</div>
@@ -1322,7 +1322,7 @@ function SimulatorView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-xl border border-black/5 dark:border-white/10 p-3">
               <div className="text-[10px] font-bold tracking-widest uppercase text-gray-500">Trend ratio</div>
               <div className="mt-2 text-2xl font-serif">{((simulation?.trend_ratio || 0) * 100).toFixed(1)}%</div>
@@ -1434,9 +1434,9 @@ function MonitorView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }) 
   const reasoning = monitor?.optimization_reasoning || [];
 
   return (
-    <div className="h-full min-h-0 grid grid-rows-[minmax(0,1.05fr)_minmax(0,0.95fr)] gap-3 overflow-hidden">
+    <div className="h-full min-h-0 grid grid-cols-1 gap-3 overflow-hidden lg:grid-rows-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
       <div className="min-h-0 rounded-xl border border-black/5 dark:border-white/5 bg-[var(--color-card-bg)] p-5 flex flex-col transition-transform duration-200 hover:scale-[1.01]">
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400 uppercase">All active services</h2>
             <div className="mt-2 text-[15px] text-gray-500">
@@ -1492,7 +1492,7 @@ function MonitorView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }) 
         {error && <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm flex items-center gap-2"><AlertCircle size={16} className="text-red-400" /><span>{error}</span></div>}
 
         <div className="mt-4 flex-1 min-h-0 overflow-y-auto pr-1">
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {(isLoading ? Array.from({ length: 6 }) : services).map((service, index) => (
               <div
                 key={isLoading ? `service-skeleton-${index}` : service.service}
@@ -1529,7 +1529,7 @@ function MonitorView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }) 
         </div>
       </div>
 
-      <div className="min-h-0 grid grid-cols-2 gap-3">
+      <div className="min-h-0 grid grid-cols-1 gap-3 xl:grid-cols-2">
         <div className="min-h-0 rounded-xl border border-black/5 dark:border-white/5 bg-[var(--color-card-bg)] p-5 flex flex-col transition-transform duration-200 hover:scale-[1.01]">
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -1664,8 +1664,8 @@ function AssistantView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
   const topServices = response?.summary.top_services || [];
 
   return (
-    <div className="h-full min-h-0 grid grid-cols-12 gap-3 overflow-hidden">
-      <div className="col-span-4 bg-[var(--color-card-bg)] rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.015]">
+    <div className="h-full min-h-0 grid grid-cols-1 gap-3 overflow-hidden xl:grid-cols-12">
+      <div className="bg-[var(--color-card-bg)] rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.015] xl:col-span-4">
         <div>
           <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400 uppercase">Ask FinOps</h2>
           <p className="mt-2 text-[15px] leading-relaxed text-gray-500">
@@ -1683,7 +1683,7 @@ function AssistantView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
               <label className="text-[10px] font-bold tracking-widest text-gray-500 uppercase block mb-1.5">Time frame</label>
               <select
@@ -1735,9 +1735,9 @@ function AssistantView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
         </button>
       </div>
 
-      <div className="col-span-8 min-h-0 grid grid-rows-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-3">
+      <div className="min-h-0 grid grid-cols-1 gap-3 xl:col-span-8 xl:grid-rows-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div className="bg-[var(--color-card-bg)] rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col transition-transform duration-200 hover:scale-[1.015] min-h-0">
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400 uppercase">Assistant Response</h2>
               <div className="mt-1 text-[12px] font-bold tracking-widest uppercase text-gray-500">
@@ -1753,7 +1753,7 @@ function AssistantView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 min-h-0">
+        <div className="grid grid-cols-1 gap-3 min-h-0 sm:grid-cols-2 xl:grid-cols-3">
           <div className={cn('rounded-xl p-5 border border-black/5 dark:border-white/5 flex flex-col justify-between transition-transform duration-200 hover:scale-[1.015]', theme === 'light' ? 'bg-[#e5e5e5]' : 'bg-[#2a2422]')}>
             <div className="text-[11px] font-bold tracking-[0.2em] text-gray-400 uppercase">Observed Cost</div>
             <div className="text-4xl font-serif">{money.format(response?.summary.total_cost || 0)}</div>
@@ -1776,7 +1776,7 @@ function AssistantView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
             <h2 className="text-[14px] font-bold tracking-[0.2em] text-gray-400 uppercase">Top Services In Context</h2>
             <div className="text-[12px] font-bold tracking-widest uppercase text-gray-500">{serviceFilter || 'All services'}</div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {topServices.length ? topServices.slice(0, 3).map((item) => (
               <div key={item.service} className="rounded-xl border border-black/5 dark:border-white/10 p-4 bg-black/5 dark:bg-white/5">
                 <div className="text-[12px] font-bold tracking-widest uppercase text-gray-500">{item.service}</div>
@@ -1784,7 +1784,7 @@ function AssistantView({ theme, dataMode }: { theme: Theme; dataMode: DataMode }
                 <div className="mt-1 text-[12px] font-bold tracking-widest uppercase text-gray-500">{(item.share * 100).toFixed(1)}% of total</div>
               </div>
             )) : (
-              <div className="col-span-3 text-[15px] text-gray-500">No service summary available yet.</div>
+              <div className="text-[15px] text-gray-500 sm:col-span-2 xl:col-span-3">No service summary available yet.</div>
             )}
           </div>
         </div>
@@ -1861,9 +1861,9 @@ function FloatingAssistant({ theme, dataMode }: { theme: Theme; dataMode: DataMo
   };
 
   return (
-    <div className="fixed right-5 bottom-5 z-[400] flex flex-col items-end gap-3">
+    <div className="fixed right-3 bottom-3 z-[400] flex flex-col items-end gap-3 sm:right-5 sm:bottom-5">
       {isOpen && (
-        <div className={cn('w-[24rem] h-[32rem] rounded-2xl border shadow-2xl p-4 flex flex-col gap-3 backdrop-blur-sm', theme === 'light' ? 'border-black/10 bg-[#fffdf8]/95 text-black' : 'border-white/10 bg-[#111111]/95 text-white')}>
+        <div className={cn('w-[calc(100vw-1.5rem)] max-w-[24rem] h-[min(70vh,32rem)] rounded-2xl border shadow-2xl p-4 flex flex-col gap-3 backdrop-blur-sm sm:w-[24rem]', theme === 'light' ? 'border-black/10 bg-[#fffdf8]/95 text-black' : 'border-white/10 bg-[#111111]/95 text-white')}>
           <div className="flex items-start justify-between gap-3">
             <div>
               <div className="text-[12px] font-bold tracking-[0.3em] uppercase text-gray-500">CloudGuard</div>
@@ -1948,13 +1948,13 @@ export default function App({ onOpenProfile }: { onOpenProfile?: () => void }) {
   const [dataMode, setDataMode] = useState<DataMode>('aws');
 
   return (
-    <div className={cn('min-h-screen w-full p-3 font-sans overflow-hidden transition-colors duration-300', theme === 'light' ? 'light' : 'dark')}>
-      <div className="mx-auto h-[calc(100vh-1.5rem)] max-h-[1080px] w-full max-w-[1500px]">
-        <div className="h-full flex gap-3">
+    <div className={cn('min-h-screen w-full p-2 font-sans overflow-x-hidden transition-colors duration-300 sm:p-3', theme === 'light' ? 'light' : 'dark')}>
+      <div className="mx-auto min-h-[calc(100vh-1rem)] w-full max-w-[1500px] sm:min-h-[calc(100vh-1.5rem)] lg:h-[calc(100vh-1.5rem)] lg:max-h-[1080px]">
+        <div className="flex min-h-full flex-col gap-3 lg:h-full lg:flex-row">
           <Sidebar theme={theme} view={view} setView={setView} collapsed={sidebarCollapsed} toggleCollapsed={() => setSidebarCollapsed((value) => !value)} dataMode={dataMode} toggleDataMode={() => setDataMode((current) => (current === 'aws' ? 'fallback' : 'aws'))} />
-          <main className={cn('flex-1 min-w-0 rounded-2xl border p-4 flex flex-col gap-3 shadow-sm overflow-visible', theme === 'light' ? 'border-black/10 bg-[#f7f3ea]' : 'border-white/5 bg-transparent')}>
+          <main className={cn('flex-1 min-w-0 rounded-2xl border p-3 flex flex-col gap-3 shadow-sm overflow-visible sm:p-4', theme === 'light' ? 'border-black/10 bg-[#f7f3ea]' : 'border-white/5 bg-transparent')}>
           <TopBar theme={theme} view={view} toggleTheme={() => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))} onOpenProfile={onOpenProfile} />
-          <div className={cn('flex-1 min-h-0 pr-1', view === 'simulator' ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden')}>
+          <div className={cn('flex-1 min-h-0 pr-0 sm:pr-1', view === 'simulator' ? 'overflow-y-auto overflow-x-hidden' : 'overflow-visible lg:overflow-hidden')}>
             {view === 'dashboard' ? <DashboardView theme={theme} dataMode={dataMode} /> : view === 'monitor' ? <MonitorView theme={theme} dataMode={dataMode} /> : view === 'forecast' ? <ForecastView theme={theme} dataMode={dataMode} /> : view === 'simulator' ? <SimulatorView theme={theme} dataMode={dataMode} /> : <AssistantView theme={theme} dataMode={dataMode} />}
           </div>
           </main>

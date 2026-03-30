@@ -167,12 +167,12 @@ export default function App({ onBackToLanding, onOpenProfile }: { onBackToLandin
 
   return (
     <div className={cn(
-      "h-screen w-full p-4 font-sans overflow-hidden flex flex-col gap-2 transition-colors duration-300",
+      "min-h-screen w-full p-3 font-sans overflow-x-hidden flex flex-col gap-3 transition-colors duration-300 sm:p-4 lg:h-screen lg:overflow-hidden",
       theme === 'light' ? 'light' : 'dark'
     )}>
       {/* Header */}
-      <header className="flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-6">
+      <header className="flex flex-col gap-4 shrink-0 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
           <div className="flex items-center gap-2">
             {onBackToLanding && (
               <button
@@ -189,15 +189,15 @@ export default function App({ onBackToLanding, onOpenProfile }: { onBackToLandin
             <div className={cn("w-5 h-5 border-2 flex items-center justify-center", theme === 'light' ? "border-black" : "border-white")}>
               <div className={cn("w-1.5 h-1.5", theme === 'light' ? "bg-black" : "bg-white")} />
             </div>
-            <span className="text-xl font-medium tracking-tight">CloudSense Analytics</span>
+            <span className="text-lg font-medium tracking-tight sm:text-xl">CloudSense Analytics</span>
           </div>
-          <nav className="flex items-center gap-5 text-[12px] font-bold tracking-widest text-gray-500">
+          <nav className="flex flex-wrap items-center gap-4 text-[11px] font-bold tracking-widest text-gray-500 sm:text-[12px]">
             <a href="#" className={cn("pb-0.5", theme === 'light' ? "text-black border-b border-black" : "text-white border-b border-white")}>DASHBOARD</a>
             <a href="#" className="hover:text-gray-400 transition-colors">WIDGETS</a>
             <a href="#" className="hover:text-gray-400 transition-colors">SETTINGS</a>
           </nav>
         </div>
-        <div className="flex items-center gap-4 text-[11px] font-bold tracking-widest text-gray-500">
+        <div className="flex flex-wrap items-center gap-3 text-[11px] font-bold tracking-widest text-gray-500">
           <button 
             onClick={toggleTheme}
             className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
@@ -219,8 +219,8 @@ export default function App({ onBackToLanding, onOpenProfile }: { onBackToLandin
       </header>
 
       {/* Title Section */}
-      <div className="grid grid-cols-3 items-baseline shrink-0">
-        <div className="flex items-center gap-4">
+      <div className="grid grid-cols-1 gap-4 shrink-0 xl:grid-cols-3 xl:items-baseline">
+        <div className="flex flex-wrap items-center gap-4">
           {isEditingTitle ? (
             <input
               type="text"
@@ -230,13 +230,13 @@ export default function App({ onBackToLanding, onOpenProfile }: { onBackToLandin
               onKeyDown={handleTitleKeyDown}
               autoFocus
               className={cn(
-              "text-5xl font-serif font-light bg-transparent border-b-2 outline-none",
+              "text-3xl sm:text-4xl xl:text-5xl font-serif font-light bg-transparent border-b-2 outline-none w-full sm:w-auto",
                 theme === 'light' ? "border-gray-300" : "border-gray-700"
               )}
             />
           ) : (
             <h1 
-              className="text-5xl font-serif font-light cursor-pointer hover:opacity-70 transition-opacity"
+              className="text-3xl sm:text-4xl xl:text-5xl font-serif font-light cursor-pointer hover:opacity-70 transition-opacity"
               onClick={() => setIsEditingTitle(true)}
             >
               {dashboardTitle}
@@ -256,16 +256,16 @@ export default function App({ onBackToLanding, onOpenProfile }: { onBackToLandin
             Add Note
           </button>
         </div>
-        <div className="text-center text-4xl font-serif font-light opacity-40">
+        <div className="text-left text-2xl font-serif font-light opacity-40 sm:text-3xl xl:text-center xl:text-4xl">
           {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} UTC
         </div>
-        <div className="text-right text-4xl font-serif font-light opacity-40">
+        <div className="text-left text-2xl font-serif font-light opacity-40 sm:text-3xl xl:text-right xl:text-4xl">
           {new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
         </div>
       </div>
 
       {/* Widget Grid */}
-      <div className="grid grid-cols-12 gap-3 flex-1 min-h-0 overflow-y-auto custom-scrollbar relative pr-1 auto-rows-auto content-start">
+      <div className="grid grid-cols-12 gap-3 flex-1 min-h-0 overflow-y-auto custom-scrollbar relative pr-0 sm:pr-1 auto-rows-auto content-start">
         {/* Render existing widgets */}
         {layout.widgets.map((widget) => (
           <div 
@@ -276,7 +276,7 @@ export default function App({ onBackToLanding, onOpenProfile }: { onBackToLandin
               theme === 'light' ? "bg-[#e5e5e5]" : "bg-[#2a2422]"
             )}
           >
-            <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+            <div className="absolute top-2 right-2 flex gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity z-10">
               <button
                 onClick={() => startEditWidget(widget)}
                 className="p-1 rounded-full bg-blue-500/80 hover:bg-blue-500 text-white"
