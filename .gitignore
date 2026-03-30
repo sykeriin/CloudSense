@@ -1,0 +1,38 @@
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.venv/
+venv/
+
+# Node
+node_modules/
+.npm-cache/
+dist/
+build/
+coverage/
+
+# Logs and runtime output
+*.log
+*.out
+*.err
+*.pid
+*.seed
+*.stackdump
+*.stdout.log
+*.stderr.log
+*.out.log
+*.err.log
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

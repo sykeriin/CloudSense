@@ -1,0 +1,1502 @@
+[
+  {
+    "date": "2026-01-28",
+    "service": "EC2",
+    "amount": 18.6956
+  },
+  {
+    "date": "2026-01-28",
+    "service": "S3",
+    "amount": 2.3395
+  },
+  {
+    "date": "2026-01-28",
+    "service": "Lambda",
+    "amount": 0.5337
+  },
+  {
+    "date": "2026-01-28",
+    "service": "RDS",
+    "amount": 9.6565
+  },
+  {
+    "date": "2026-01-28",
+    "service": "API Gateway",
+    "amount": 0.363
+  },
+  {
+    "date": "2026-01-29",
+    "service": "EC2",
+    "amount": 21.5125
+  },
+  {
+    "date": "2026-01-29",
+    "service": "S3",
+    "amount": 2.1443
+  },
+  {
+    "date": "2026-01-29",
+    "service": "Lambda",
+    "amount": 0.5422
+  },
+  {
+    "date": "2026-01-29",
+    "service": "RDS",
+    "amount": 10.8246
+  },
+  {
+    "date": "2026-01-29",
+    "service": "API Gateway",
+    "amount": 0.4674
+  },
+  {
+    "date": "2026-01-30",
+    "service": "EC2",
+    "amount": 48.8774
+  },
+  {
+    "date": "2026-01-30",
+    "service": "S3",
+    "amount": 5.3879
+  },
+  {
+    "date": "2026-01-30",
+    "service": "Lambda",
+    "amount": 1.2952
+  },
+  {
+    "date": "2026-01-30",
+    "service": "RDS",
+    "amount": 28.1515
+  },
+  {
+    "date": "2026-01-30",
+    "service": "API Gateway",
+    "amount": 0.932
+  },
+  {
+    "date": "2026-01-31",
+    "service": "EC2",
+    "amount": 12.1613
+  },
+  {
+    "date": "2026-01-31",
+    "service": "S3",
+    "amount": 1.7196
+  },
+  {
+    "date": "2026-01-31",
+    "service": "Lambda",
+    "amount": 0.3013
+  },
+  {
+    "date": "2026-01-31",
+    "service": "RDS",
+    "amount": 7.5252
+  },
+  {
+    "date": "2026-01-31",
+    "service": "API Gateway",
+    "amount": 0.3403
+  },
+  {
+    "date": "2026-02-01",
+    "service": "EC2",
+    "amount": 25.3064
+  },
+  {
+    "date": "2026-02-01",
+    "service": "S3",
+    "amount": 2.6485
+  },
+  {
+    "date": "2026-02-01",
+    "service": "Lambda",
+    "amount": 0.6441
+  },
+  {
+    "date": "2026-02-01",
+    "service": "RDS",
+    "amount": 21.4924
+  },
+  {
+    "date": "2026-02-01",
+    "service": "API Gateway",
+    "amount": 0.4892
+  },
+  {
+    "date": "2026-02-02",
+    "service": "EC2",
+    "amount": 16.9037
+  },
+  {
+    "date": "2026-02-02",
+    "service": "S3",
+    "amount": 2.5589
+  },
+  {
+    "date": "2026-02-02",
+    "service": "Lambda",
+    "amount": 0.3933
+  },
+  {
+    "date": "2026-02-02",
+    "service": "RDS",
+    "amount": 9.9452
+  },
+  {
+    "date": "2026-02-02",
+    "service": "API Gateway",
+    "amount": 0.3258
+  },
+  {
+    "date": "2026-02-03",
+    "service": "EC2",
+    "amount": 20.0138
+  },
+  {
+    "date": "2026-02-03",
+    "service": "S3",
+    "amount": 1.9394
+  },
+  {
+    "date": "2026-02-03",
+    "service": "Lambda",
+    "amount": 0.4762
+  },
+  {
+    "date": "2026-02-03",
+    "service": "RDS",
+    "amount": 12.0332
+  },
+  {
+    "date": "2026-02-03",
+    "service": "API Gateway",
+    "amount": 0.2767
+  },
+  {
+    "date": "2026-02-04",
+    "service": "EC2",
+    "amount": 37.4454
+  },
+  {
+    "date": "2026-02-04",
+    "service": "S3",
+    "amount": 4.7164
+  },
+  {
+    "date": "2026-02-04",
+    "service": "Lambda",
+    "amount": 1.1292
+  },
+  {
+    "date": "2026-02-04",
+    "service": "RDS",
+    "amount": 28.42
+  },
+  {
+    "date": "2026-02-04",
+    "service": "API Gateway",
+    "amount": 0.6349
+  },
+  {
+    "date": "2026-02-05",
+    "service": "EC2",
+    "amount": 19.9971
+  },
+  {
+    "date": "2026-02-05",
+    "service": "S3",
+    "amount": 2.3042
+  },
+  {
+    "date": "2026-02-05",
+    "service": "Lambda",
+    "amount": 0.3781
+  },
+  {
+    "date": "2026-02-05",
+    "service": "RDS",
+    "amount": 12.5943
+  },
+  {
+    "date": "2026-02-05",
+    "service": "API Gateway",
+    "amount": 0.3907
+  },
+  {
+    "date": "2026-02-06",
+    "service": "EC2",
+    "amount": 21.0281
+  },
+  {
+    "date": "2026-02-06",
+    "service": "S3",
+    "amount": 2.5108
+  },
+  {
+    "date": "2026-02-06",
+    "service": "Lambda",
+    "amount": 0.4938
+  },
+  {
+    "date": "2026-02-06",
+    "service": "RDS",
+    "amount": 11.3705
+  },
+  {
+    "date": "2026-02-06",
+    "service": "API Gateway",
+    "amount": 0.3436
+  },
+  {
+    "date": "2026-02-07",
+    "service": "EC2",
+    "amount": 11.1462
+  },
+  {
+    "date": "2026-02-07",
+    "service": "S3",
+    "amount": 1.5662
+  },
+  {
+    "date": "2026-02-07",
+    "service": "Lambda",
+    "amount": 0.2834
+  },
+  {
+    "date": "2026-02-07",
+    "service": "RDS",
+    "amount": 7.0707
+  },
+  {
+    "date": "2026-02-07",
+    "service": "API Gateway",
+    "amount": 0.2101
+  },
+  {
+    "date": "2026-02-08",
+    "service": "EC2",
+    "amount": 14.2613
+  },
+  {
+    "date": "2026-02-08",
+    "service": "S3",
+    "amount": 1.4941
+  },
+  {
+    "date": "2026-02-08",
+    "service": "Lambda",
+    "amount": 0.3914
+  },
+  {
+    "date": "2026-02-08",
+    "service": "RDS",
+    "amount": 9.1239
+  },
+  {
+    "date": "2026-02-08",
+    "service": "API Gateway",
+    "amount": 0.2694
+  },
+  {
+    "date": "2026-02-09",
+    "service": "EC2",
+    "amount": 1.1712
+  },
+  {
+    "date": "2026-02-09",
+    "service": "S3",
+    "amount": 0.0982
+  },
+  {
+    "date": "2026-02-09",
+    "service": "Lambda",
+    "amount": 0.0251
+  },
+  {
+    "date": "2026-02-09",
+    "service": "RDS",
+    "amount": 0.6006
+  },
+  {
+    "date": "2026-02-09",
+    "service": "API Gateway",
+    "amount": 0.0215
+  },
+  {
+    "date": "2026-02-10",
+    "service": "EC2",
+    "amount": 15.9346
+  },
+  {
+    "date": "2026-02-10",
+    "service": "S3",
+    "amount": 1.8175
+  },
+  {
+    "date": "2026-02-10",
+    "service": "Lambda",
+    "amount": 0.4582
+  },
+  {
+    "date": "2026-02-10",
+    "service": "RDS",
+    "amount": 13.2968
+  },
+  {
+    "date": "2026-02-10",
+    "service": "API Gateway",
+    "amount": 0.3845
+  },
+  {
+    "date": "2026-02-11",
+    "service": "EC2",
+    "amount": 62.908
+  },
+  {
+    "date": "2026-02-11",
+    "service": "S3",
+    "amount": 8.3513
+  },
+  {
+    "date": "2026-02-11",
+    "service": "Lambda",
+    "amount": 1.6806
+  },
+  {
+    "date": "2026-02-11",
+    "service": "RDS",
+    "amount": 37.1397
+  },
+  {
+    "date": "2026-02-11",
+    "service": "API Gateway",
+    "amount": 1.6186
+  },
+  {
+    "date": "2026-02-12",
+    "service": "EC2",
+    "amount": 18.0661
+  },
+  {
+    "date": "2026-02-12",
+    "service": "S3",
+    "amount": 3.0192
+  },
+  {
+    "date": "2026-02-12",
+    "service": "Lambda",
+    "amount": 0.5353
+  },
+  {
+    "date": "2026-02-12",
+    "service": "RDS",
+    "amount": 12.7592
+  },
+  {
+    "date": "2026-02-12",
+    "service": "API Gateway",
+    "amount": 0.3965
+  },
+  {
+    "date": "2026-02-13",
+    "service": "EC2",
+    "amount": 17.5863
+  },
+  {
+    "date": "2026-02-13",
+    "service": "S3",
+    "amount": 1.7496
+  },
+  {
+    "date": "2026-02-13",
+    "service": "Lambda",
+    "amount": 0.4061
+  },
+  {
+    "date": "2026-02-13",
+    "service": "RDS",
+    "amount": 12.1719
+  },
+  {
+    "date": "2026-02-13",
+    "service": "API Gateway",
+    "amount": 0.4186
+  },
+  {
+    "date": "2026-02-14",
+    "service": "EC2",
+    "amount": 14.1688
+  },
+  {
+    "date": "2026-02-14",
+    "service": "S3",
+    "amount": 1.9487
+  },
+  {
+    "date": "2026-02-14",
+    "service": "Lambda",
+    "amount": 0.3293
+  },
+  {
+    "date": "2026-02-14",
+    "service": "RDS",
+    "amount": 9.8534
+  },
+  {
+    "date": "2026-02-14",
+    "service": "API Gateway",
+    "amount": 0.2877
+  },
+  {
+    "date": "2026-02-15",
+    "service": "EC2",
+    "amount": 71.5467
+  },
+  {
+    "date": "2026-02-15",
+    "service": "S3",
+    "amount": 6.196
+  },
+  {
+    "date": "2026-02-15",
+    "service": "Lambda",
+    "amount": 1.0741
+  },
+  {
+    "date": "2026-02-15",
+    "service": "RDS",
+    "amount": 53.5979
+  },
+  {
+    "date": "2026-02-15",
+    "service": "API Gateway",
+    "amount": 1.0262
+  },
+  {
+    "date": "2026-02-16",
+    "service": "EC2",
+    "amount": 16.1584
+  },
+  {
+    "date": "2026-02-16",
+    "service": "S3",
+    "amount": 2.3016
+  },
+  {
+    "date": "2026-02-16",
+    "service": "Lambda",
+    "amount": 0.6177
+  },
+  {
+    "date": "2026-02-16",
+    "service": "RDS",
+    "amount": 11.094
+  },
+  {
+    "date": "2026-02-16",
+    "service": "API Gateway",
+    "amount": 0.3874
+  },
+  {
+    "date": "2026-02-17",
+    "service": "EC2",
+    "amount": 68.8229
+  },
+  {
+    "date": "2026-02-17",
+    "service": "S3",
+    "amount": 8.895
+  },
+  {
+    "date": "2026-02-17",
+    "service": "Lambda",
+    "amount": 1.2073
+  },
+  {
+    "date": "2026-02-17",
+    "service": "RDS",
+    "amount": 36.8527
+  },
+  {
+    "date": "2026-02-17",
+    "service": "API Gateway",
+    "amount": 1.2094
+  },
+  {
+    "date": "2026-02-18",
+    "service": "EC2",
+    "amount": 21.8955
+  },
+  {
+    "date": "2026-02-18",
+    "service": "S3",
+    "amount": 2.4716
+  },
+  {
+    "date": "2026-02-18",
+    "service": "Lambda",
+    "amount": 0.4243
+  },
+  {
+    "date": "2026-02-18",
+    "service": "RDS",
+    "amount": 11.9626
+  },
+  {
+    "date": "2026-02-18",
+    "service": "API Gateway",
+    "amount": 0.243
+  },
+  {
+    "date": "2026-02-19",
+    "service": "EC2",
+    "amount": 17.1304
+  },
+  {
+    "date": "2026-02-19",
+    "service": "S3",
+    "amount": 2.649
+  },
+  {
+    "date": "2026-02-19",
+    "service": "Lambda",
+    "amount": 0.6769
+  },
+  {
+    "date": "2026-02-19",
+    "service": "RDS",
+    "amount": 11.8668
+  },
+  {
+    "date": "2026-02-19",
+    "service": "API Gateway",
+    "amount": 0.4237
+  },
+  {
+    "date": "2026-02-20",
+    "service": "EC2",
+    "amount": 19.3275
+  },
+  {
+    "date": "2026-02-20",
+    "service": "S3",
+    "amount": 2.0335
+  },
+  {
+    "date": "2026-02-20",
+    "service": "Lambda",
+    "amount": 0.4502
+  },
+  {
+    "date": "2026-02-20",
+    "service": "RDS",
+    "amount": 12.7025
+  },
+  {
+    "date": "2026-02-20",
+    "service": "API Gateway",
+    "amount": 0.3324
+  },
+  {
+    "date": "2026-02-21",
+    "service": "EC2",
+    "amount": 8.8861
+  },
+  {
+    "date": "2026-02-21",
+    "service": "S3",
+    "amount": 1.7448
+  },
+  {
+    "date": "2026-02-21",
+    "service": "Lambda",
+    "amount": 0.2923
+  },
+  {
+    "date": "2026-02-21",
+    "service": "RDS",
+    "amount": 10.0323
+  },
+  {
+    "date": "2026-02-21",
+    "service": "API Gateway",
+    "amount": 0.132
+  },
+  {
+    "date": "2026-02-22",
+    "service": "EC2",
+    "amount": 15.2223
+  },
+  {
+    "date": "2026-02-22",
+    "service": "S3",
+    "amount": 2.4701
+  },
+  {
+    "date": "2026-02-22",
+    "service": "Lambda",
+    "amount": 0.3366
+  },
+  {
+    "date": "2026-02-22",
+    "service": "RDS",
+    "amount": 9.0311
+  },
+  {
+    "date": "2026-02-22",
+    "service": "API Gateway",
+    "amount": 0.2659
+  },
+  {
+    "date": "2026-02-23",
+    "service": "EC2",
+    "amount": 20.2698
+  },
+  {
+    "date": "2026-02-23",
+    "service": "S3",
+    "amount": 1.982
+  },
+  {
+    "date": "2026-02-23",
+    "service": "Lambda",
+    "amount": 0.4886
+  },
+  {
+    "date": "2026-02-23",
+    "service": "RDS",
+    "amount": 13.1053
+  },
+  {
+    "date": "2026-02-23",
+    "service": "API Gateway",
+    "amount": 0.3908
+  },
+  {
+    "date": "2026-02-24",
+    "service": "EC2",
+    "amount": 18.6099
+  },
+  {
+    "date": "2026-02-24",
+    "service": "S3",
+    "amount": 2.2795
+  },
+  {
+    "date": "2026-02-24",
+    "service": "Lambda",
+    "amount": 0.4934
+  },
+  {
+    "date": "2026-02-24",
+    "service": "RDS",
+    "amount": 10.1118
+  },
+  {
+    "date": "2026-02-24",
+    "service": "API Gateway",
+    "amount": 0.3287
+  },
+  {
+    "date": "2026-02-25",
+    "service": "EC2",
+    "amount": 19.4121
+  },
+  {
+    "date": "2026-02-25",
+    "service": "S3",
+    "amount": 1.9586
+  },
+  {
+    "date": "2026-02-25",
+    "service": "Lambda",
+    "amount": 0.4472
+  },
+  {
+    "date": "2026-02-25",
+    "service": "RDS",
+    "amount": 15.5142
+  },
+  {
+    "date": "2026-02-25",
+    "service": "API Gateway",
+    "amount": 0.3646
+  },
+  {
+    "date": "2026-02-26",
+    "service": "EC2",
+    "amount": 20.2521
+  },
+  {
+    "date": "2026-02-26",
+    "service": "S3",
+    "amount": 2.7057
+  },
+  {
+    "date": "2026-02-26",
+    "service": "Lambda",
+    "amount": 0.4666
+  },
+  {
+    "date": "2026-02-26",
+    "service": "RDS",
+    "amount": 10.0553
+  },
+  {
+    "date": "2026-02-26",
+    "service": "API Gateway",
+    "amount": 0.4353
+  },
+  {
+    "date": "2026-02-27",
+    "service": "EC2",
+    "amount": 21.9696
+  },
+  {
+    "date": "2026-02-27",
+    "service": "S3",
+    "amount": 2.7667
+  },
+  {
+    "date": "2026-02-27",
+    "service": "Lambda",
+    "amount": 0.4583
+  },
+  {
+    "date": "2026-02-27",
+    "service": "RDS",
+    "amount": 10.5697
+  },
+  {
+    "date": "2026-02-27",
+    "service": "API Gateway",
+    "amount": 0.3048
+  },
+  {
+    "date": "2026-02-28",
+    "service": "EC2",
+    "amount": 15.5116
+  },
+  {
+    "date": "2026-02-28",
+    "service": "S3",
+    "amount": 2.9001
+  },
+  {
+    "date": "2026-02-28",
+    "service": "Lambda",
+    "amount": 0.4138
+  },
+  {
+    "date": "2026-02-28",
+    "service": "RDS",
+    "amount": 10.6236
+  },
+  {
+    "date": "2026-02-28",
+    "service": "API Gateway",
+    "amount": 0.3517
+  },
+  {
+    "date": "2026-03-01",
+    "service": "EC2",
+    "amount": 21.033
+  },
+  {
+    "date": "2026-03-01",
+    "service": "S3",
+    "amount": 1.835
+  },
+  {
+    "date": "2026-03-01",
+    "service": "Lambda",
+    "amount": 0.4872
+  },
+  {
+    "date": "2026-03-01",
+    "service": "RDS",
+    "amount": 13.3916
+  },
+  {
+    "date": "2026-03-01",
+    "service": "API Gateway",
+    "amount": 0.1863
+  },
+  {
+    "date": "2026-03-02",
+    "service": "EC2",
+    "amount": 18.9432
+  },
+  {
+    "date": "2026-03-02",
+    "service": "S3",
+    "amount": 2.946
+  },
+  {
+    "date": "2026-03-02",
+    "service": "Lambda",
+    "amount": 0.4163
+  },
+  {
+    "date": "2026-03-02",
+    "service": "RDS",
+    "amount": 14.022
+  },
+  {
+    "date": "2026-03-02",
+    "service": "API Gateway",
+    "amount": 0.3931
+  },
+  {
+    "date": "2026-03-03",
+    "service": "EC2",
+    "amount": 17.3855
+  },
+  {
+    "date": "2026-03-03",
+    "service": "S3",
+    "amount": 2.7935
+  },
+  {
+    "date": "2026-03-03",
+    "service": "Lambda",
+    "amount": 0.4778
+  },
+  {
+    "date": "2026-03-03",
+    "service": "RDS",
+    "amount": 10.6836
+  },
+  {
+    "date": "2026-03-03",
+    "service": "API Gateway",
+    "amount": 0.4362
+  },
+  {
+    "date": "2026-03-04",
+    "service": "EC2",
+    "amount": 22.8518
+  },
+  {
+    "date": "2026-03-04",
+    "service": "S3",
+    "amount": 2.6009
+  },
+  {
+    "date": "2026-03-04",
+    "service": "Lambda",
+    "amount": 0.3438
+  },
+  {
+    "date": "2026-03-04",
+    "service": "RDS",
+    "amount": 11.5386
+  },
+  {
+    "date": "2026-03-04",
+    "service": "API Gateway",
+    "amount": 0.2425
+  },
+  {
+    "date": "2026-03-05",
+    "service": "EC2",
+    "amount": 20.0569
+  },
+  {
+    "date": "2026-03-05",
+    "service": "S3",
+    "amount": 1.8861
+  },
+  {
+    "date": "2026-03-05",
+    "service": "Lambda",
+    "amount": 0.6094
+  },
+  {
+    "date": "2026-03-05",
+    "service": "RDS",
+    "amount": 12.7501
+  },
+  {
+    "date": "2026-03-05",
+    "service": "API Gateway",
+    "amount": 0.3475
+  },
+  {
+    "date": "2026-03-06",
+    "service": "EC2",
+    "amount": 22.193
+  },
+  {
+    "date": "2026-03-06",
+    "service": "S3",
+    "amount": 2.1568
+  },
+  {
+    "date": "2026-03-06",
+    "service": "Lambda",
+    "amount": 0.5517
+  },
+  {
+    "date": "2026-03-06",
+    "service": "RDS",
+    "amount": 13.2543
+  },
+  {
+    "date": "2026-03-06",
+    "service": "API Gateway",
+    "amount": 0.266
+  },
+  {
+    "date": "2026-03-07",
+    "service": "EC2",
+    "amount": 21.9939
+  },
+  {
+    "date": "2026-03-07",
+    "service": "S3",
+    "amount": 1.9694
+  },
+  {
+    "date": "2026-03-07",
+    "service": "Lambda",
+    "amount": 0.4604
+  },
+  {
+    "date": "2026-03-07",
+    "service": "RDS",
+    "amount": 12.7834
+  },
+  {
+    "date": "2026-03-07",
+    "service": "API Gateway",
+    "amount": 0.3855
+  },
+  {
+    "date": "2026-03-08",
+    "service": "EC2",
+    "amount": 12.9922
+  },
+  {
+    "date": "2026-03-08",
+    "service": "S3",
+    "amount": 1.6099
+  },
+  {
+    "date": "2026-03-08",
+    "service": "Lambda",
+    "amount": 0.2683
+  },
+  {
+    "date": "2026-03-08",
+    "service": "RDS",
+    "amount": 8.7154
+  },
+  {
+    "date": "2026-03-08",
+    "service": "API Gateway",
+    "amount": 0.3025
+  },
+  {
+    "date": "2026-03-09",
+    "service": "EC2",
+    "amount": 68.3153
+  },
+  {
+    "date": "2026-03-09",
+    "service": "S3",
+    "amount": 9.2682
+  },
+  {
+    "date": "2026-03-09",
+    "service": "Lambda",
+    "amount": 1.9312
+  },
+  {
+    "date": "2026-03-09",
+    "service": "RDS",
+    "amount": 35.3237
+  },
+  {
+    "date": "2026-03-09",
+    "service": "API Gateway",
+    "amount": 0.9785
+  },
+  {
+    "date": "2026-03-10",
+    "service": "EC2",
+    "amount": 20.7665
+  },
+  {
+    "date": "2026-03-10",
+    "service": "S3",
+    "amount": 2.5201
+  },
+  {
+    "date": "2026-03-10",
+    "service": "Lambda",
+    "amount": 0.481
+  },
+  {
+    "date": "2026-03-10",
+    "service": "RDS",
+    "amount": 12.6399
+  },
+  {
+    "date": "2026-03-10",
+    "service": "API Gateway",
+    "amount": 0.3806
+  },
+  {
+    "date": "2026-03-11",
+    "service": "EC2",
+    "amount": 18.4206
+  },
+  {
+    "date": "2026-03-11",
+    "service": "S3",
+    "amount": 3.1592
+  },
+  {
+    "date": "2026-03-11",
+    "service": "Lambda",
+    "amount": 0.5401
+  },
+  {
+    "date": "2026-03-11",
+    "service": "RDS",
+    "amount": 11.9719
+  },
+  {
+    "date": "2026-03-11",
+    "service": "API Gateway",
+    "amount": 0.315
+  },
+  {
+    "date": "2026-03-12",
+    "service": "EC2",
+    "amount": 22.1061
+  },
+  {
+    "date": "2026-03-12",
+    "service": "S3",
+    "amount": 2.2958
+  },
+  {
+    "date": "2026-03-12",
+    "service": "Lambda",
+    "amount": 0.401
+  },
+  {
+    "date": "2026-03-12",
+    "service": "RDS",
+    "amount": 9.0071
+  },
+  {
+    "date": "2026-03-12",
+    "service": "API Gateway",
+    "amount": 0.4171
+  },
+  {
+    "date": "2026-03-13",
+    "service": "EC2",
+    "amount": 16.6914
+  },
+  {
+    "date": "2026-03-13",
+    "service": "S3",
+    "amount": 1.9546
+  },
+  {
+    "date": "2026-03-13",
+    "service": "Lambda",
+    "amount": 0.5399
+  },
+  {
+    "date": "2026-03-13",
+    "service": "RDS",
+    "amount": 14.0168
+  },
+  {
+    "date": "2026-03-13",
+    "service": "API Gateway",
+    "amount": 0.266
+  },
+  {
+    "date": "2026-03-14",
+    "service": "EC2",
+    "amount": 13.9331
+  },
+  {
+    "date": "2026-03-14",
+    "service": "S3",
+    "amount": 2.1575
+  },
+  {
+    "date": "2026-03-14",
+    "service": "Lambda",
+    "amount": 0.457
+  },
+  {
+    "date": "2026-03-14",
+    "service": "RDS",
+    "amount": 8.9966
+  },
+  {
+    "date": "2026-03-14",
+    "service": "API Gateway",
+    "amount": 0.2812
+  },
+  {
+    "date": "2026-03-15",
+    "service": "EC2",
+    "amount": 16.6177
+  },
+  {
+    "date": "2026-03-15",
+    "service": "S3",
+    "amount": 2.1124
+  },
+  {
+    "date": "2026-03-15",
+    "service": "Lambda",
+    "amount": 0.443
+  },
+  {
+    "date": "2026-03-15",
+    "service": "RDS",
+    "amount": 13.6424
+  },
+  {
+    "date": "2026-03-15",
+    "service": "API Gateway",
+    "amount": 0.286
+  },
+  {
+    "date": "2026-03-16",
+    "service": "EC2",
+    "amount": 19.0849
+  },
+  {
+    "date": "2026-03-16",
+    "service": "S3",
+    "amount": 1.9241
+  },
+  {
+    "date": "2026-03-16",
+    "service": "Lambda",
+    "amount": 0.5582
+  },
+  {
+    "date": "2026-03-16",
+    "service": "RDS",
+    "amount": 11.9494
+  },
+  {
+    "date": "2026-03-16",
+    "service": "API Gateway",
+    "amount": 0.4486
+  },
+  {
+    "date": "2026-03-17",
+    "service": "EC2",
+    "amount": 15.5514
+  },
+  {
+    "date": "2026-03-17",
+    "service": "S3",
+    "amount": 1.5023
+  },
+  {
+    "date": "2026-03-17",
+    "service": "Lambda",
+    "amount": 0.4004
+  },
+  {
+    "date": "2026-03-17",
+    "service": "RDS",
+    "amount": 13.1715
+  },
+  {
+    "date": "2026-03-17",
+    "service": "API Gateway",
+    "amount": 0.3117
+  },
+  {
+    "date": "2026-03-18",
+    "service": "EC2",
+    "amount": 22.1632
+  },
+  {
+    "date": "2026-03-18",
+    "service": "S3",
+    "amount": 1.7851
+  },
+  {
+    "date": "2026-03-18",
+    "service": "Lambda",
+    "amount": 0.4414
+  },
+  {
+    "date": "2026-03-18",
+    "service": "RDS",
+    "amount": 10.5548
+  },
+  {
+    "date": "2026-03-18",
+    "service": "API Gateway",
+    "amount": 0.4053
+  },
+  {
+    "date": "2026-03-19",
+    "service": "EC2",
+    "amount": 17.8811
+  },
+  {
+    "date": "2026-03-19",
+    "service": "S3",
+    "amount": 2.5199
+  },
+  {
+    "date": "2026-03-19",
+    "service": "Lambda",
+    "amount": 0.5458
+  },
+  {
+    "date": "2026-03-19",
+    "service": "RDS",
+    "amount": 12.6395
+  },
+  {
+    "date": "2026-03-19",
+    "service": "API Gateway",
+    "amount": 0.4491
+  },
+  {
+    "date": "2026-03-20",
+    "service": "EC2",
+    "amount": 20.8044
+  },
+  {
+    "date": "2026-03-20",
+    "service": "S3",
+    "amount": 1.894
+  },
+  {
+    "date": "2026-03-20",
+    "service": "Lambda",
+    "amount": 0.5525
+  },
+  {
+    "date": "2026-03-20",
+    "service": "RDS",
+    "amount": 13.6528
+  },
+  {
+    "date": "2026-03-20",
+    "service": "API Gateway",
+    "amount": 0.3479
+  },
+  {
+    "date": "2026-03-21",
+    "service": "EC2",
+    "amount": 18.8721
+  },
+  {
+    "date": "2026-03-21",
+    "service": "S3",
+    "amount": 2.0775
+  },
+  {
+    "date": "2026-03-21",
+    "service": "Lambda",
+    "amount": 0.3993
+  },
+  {
+    "date": "2026-03-21",
+    "service": "RDS",
+    "amount": 10.5689
+  },
+  {
+    "date": "2026-03-21",
+    "service": "API Gateway",
+    "amount": 0.2698
+  },
+  {
+    "date": "2026-03-22",
+    "service": "EC2",
+    "amount": 16.5036
+  },
+  {
+    "date": "2026-03-22",
+    "service": "S3",
+    "amount": 2.1278
+  },
+  {
+    "date": "2026-03-22",
+    "service": "Lambda",
+    "amount": 0.4396
+  },
+  {
+    "date": "2026-03-22",
+    "service": "RDS",
+    "amount": 9.6023
+  },
+  {
+    "date": "2026-03-22",
+    "service": "API Gateway",
+    "amount": 0.2429
+  },
+  {
+    "date": "2026-03-23",
+    "service": "EC2",
+    "amount": 17.5409
+  },
+  {
+    "date": "2026-03-23",
+    "service": "S3",
+    "amount": 2.5567
+  },
+  {
+    "date": "2026-03-23",
+    "service": "Lambda",
+    "amount": 0.4887
+  },
+  {
+    "date": "2026-03-23",
+    "service": "RDS",
+    "amount": 11.9437
+  },
+  {
+    "date": "2026-03-23",
+    "service": "API Gateway",
+    "amount": 0.383
+  },
+  {
+    "date": "2026-03-24",
+    "service": "EC2",
+    "amount": 12.241
+  },
+  {
+    "date": "2026-03-24",
+    "service": "S3",
+    "amount": 2.2862
+  },
+  {
+    "date": "2026-03-24",
+    "service": "Lambda",
+    "amount": 0.397
+  },
+  {
+    "date": "2026-03-24",
+    "service": "RDS",
+    "amount": 11.5538
+  },
+  {
+    "date": "2026-03-24",
+    "service": "API Gateway",
+    "amount": 0.381
+  },
+  {
+    "date": "2026-03-25",
+    "service": "EC2",
+    "amount": 57.8483
+  },
+  {
+    "date": "2026-03-25",
+    "service": "S3",
+    "amount": 8.9424
+  },
+  {
+    "date": "2026-03-25",
+    "service": "Lambda",
+    "amount": 1.2131
+  },
+  {
+    "date": "2026-03-25",
+    "service": "RDS",
+    "amount": 43.574
+  },
+  {
+    "date": "2026-03-25",
+    "service": "API Gateway",
+    "amount": 1.4088
+  },
+  {
+    "date": "2026-03-26",
+    "service": "EC2",
+    "amount": 20.1151
+  },
+  {
+    "date": "2026-03-26",
+    "service": "S3",
+    "amount": 1.897
+  },
+  {
+    "date": "2026-03-26",
+    "service": "Lambda",
+    "amount": 0.5307
+  },
+  {
+    "date": "2026-03-26",
+    "service": "RDS",
+    "amount": 14.776
+  },
+  {
+    "date": "2026-03-26",
+    "service": "API Gateway",
+    "amount": 0.2735
+  },
+  {
+    "date": "2026-03-27",
+    "service": "EC2",
+    "amount": 20.6961
+  },
+  {
+    "date": "2026-03-27",
+    "service": "S3",
+    "amount": 2.2448
+  },
+  {
+    "date": "2026-03-27",
+    "service": "Lambda",
+    "amount": 0.6793
+  },
+  {
+    "date": "2026-03-27",
+    "service": "RDS",
+    "amount": 12.4838
+  },
+  {
+    "date": "2026-03-27",
+    "service": "API Gateway",
+    "amount": 0.2897
+  },
+  {
+    "date": "2026-03-28",
+    "service": "EC2",
+    "amount": 16.4854
+  },
+  {
+    "date": "2026-03-28",
+    "service": "S3",
+    "amount": 2.2171
+  },
+  {
+    "date": "2026-03-28",
+    "service": "Lambda",
+    "amount": 0.3918
+  },
+  {
+    "date": "2026-03-28",
+    "service": "RDS",
+    "amount": 11.5975
+  },
+  {
+    "date": "2026-03-28",
+    "service": "API Gateway",
+    "amount": 0.3086
+  }
+]

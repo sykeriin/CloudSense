@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double+Ink:wght@100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Alumni Sans", sans-serif;
+  --font-sans: "Alumni Sans", sans-serif;
+  --font-brand: "Bitcount Grid Double Ink", "Space Grotesk", sans-serif;
+  --color-bg-main: #0a0a0a;
+  --color-card-bg: #1a1a1a;
+  --color-accent-coral: #f87171;
+  --color-accent-neutral: #ffffff;
+  --chart-axis: rgba(255, 255, 255, 0.22);
+  --chart-grid: rgba(255, 255, 255, 0.08);
+  --chart-label: #d1d5db;
+  --color-celestial-bg: #050505;
+}
+
+.celestial-bg {
+  background-color: var(--color-celestial-bg);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(60, 110, 113, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(40, 75, 99, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(60, 110, 113, 0.05) 0%, transparent 60%),
+    url("https://www.transparenttextures.com/patterns/stardust.png");
+  background-attachment: fixed;
+}
+
+html,
+body {
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--color-bg-main);
+  color: var(--color-accent-neutral);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.light {
+  --color-bg-main: #efe8db;
+  --color-card-bg: #fffdf8;
+  --color-accent-neutral: #16120d;
+  --chart-axis: rgba(63, 51, 38, 0.35);
+  --chart-grid: rgba(90, 72, 52, 0.12);
+  --chart-label: #4b5563;
+  background-color: var(--color-bg-main);
+  color: var(--color-accent-neutral);
+}
+
+.dark {
+  --color-bg-main: #0a0a0a;
+  --color-card-bg: #1a1a1a;
+  --color-accent-neutral: #ffffff;
+  --chart-axis: rgba(255, 255, 255, 0.22);
+  --chart-grid: rgba(255, 255, 255, 0.08);
+  --chart-label: #d1d5db;
+  background-color: var(--color-bg-main);
+  color: var(--color-accent-neutral);
+}
