@@ -66,6 +66,14 @@ The main application lives in `backend/`, `frontend/`, and `ml_service.py`. The 
 - FinOps assistant endpoint for cloud spend Q&A
 - Chaos/demo support for controlled EC2 workflow testing
 
+## Contributors
+
+| Name | GitHub | Contributions |
+|---|---|---|
+| Ahana | [@ahana1864](https://github.com/ahana1864) | Frontend, database, landing page |
+| Palak | [@palak11245](https://github.com/palak11245) | Backend, AWS integration, customizable dashboard, Monitor Your Services page |
+| Durva | [@sykeriin](https://github.com/sykeriin) | AI features, ML analytics, integration, AI assistant, what-if analysis, forecasting, finishing touches |
+
 ## API Highlights
 
 ### Backend
