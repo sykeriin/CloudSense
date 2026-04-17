@@ -156,8 +156,6 @@ def forecast(request: ForecastRequest):
         "periods": request.periods,
         "freq": request.freq,
     }
-console.log("Groq key:", process.env.GROQ_API_KEY)
-
 
 @app.get("/health")
 def health():
